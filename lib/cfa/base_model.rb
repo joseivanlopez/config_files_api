@@ -23,7 +23,6 @@ module CFA
     end
 
     def save(changes_only: false)
-      merge_changes if changes_only
       @file_handler.write(@file_path, @parser.serialize(data))
     end
 
@@ -82,13 +81,6 @@ module CFA
     private_class_method :attributes
 
     attr_accessor :data
-
-    def merge_changes
-      new_data = data.dup
-      read
-      # TODO: recursive merge
-      data.merge(new_data)
-    end
 
     def modify(key, value)
       # if already set, just change value
